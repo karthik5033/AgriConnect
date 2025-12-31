@@ -1,0 +1,19 @@
+
+> my-app@0.1.0 lint
+> eslint
+
+
+D:\coding_files\Projects\agriconnect\my-app\components\ChatBotButton.tsx
+  31:24  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+D:\coding_files\Projects\agriconnect\my-app\components\CreatePostBox.tsx
+  33:13  warning  Image elements must have an alt prop, either with meaningful text, or an empty string for decorative images  jsx-a11y/alt-text
+
+D:\coding_files\Projects\agriconnect\my-app\components\Navbar.tsx
+  5:18  warning  'User' is defined but never used  @typescript-eslint/no-unused-vars
+
+D:\coding_files\Projects\agriconnect\my-app\components\PostCard.tsx
+  6:10  warning  'clsx' is defined but never used  @typescript-eslint/no-unused-vars
+
+✖ 4 problems (1 error, 3 warnings)
+

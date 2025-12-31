@@ -1,0 +1,131 @@
+@import "tailwindcss";
+
+@theme {
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+
+  --color-destructive: hsl(var(--destructive));
+  --color-destructive-foreground: hsl(var(--destructive-foreground));
+
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+
+  --color-popover: hsl(var(--popover));
+  --color-popover-foreground: hsl(var(--popover-foreground));
+
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+
+  --radius-lg: var(--radius);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-sm: calc(var(--radius) - 4px);
+
+  --animate-fade-in: fadeInUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+}
+
+/* 
+  AgriConnect Pro White Theme 
+  Palette: Clean Porcelain, Soft Grays, and Professional Emeralds
+*/
+:root {
+  --background: 210 20% 98%;    /* Soft blue-gray white for app background */
+  --foreground: 220 15% 10%;    /* Almost black text for sharpness */
+
+  --card: 0 0% 100%;            /* Pure white cards */
+  --card-foreground: 220 15% 10%;
+
+  --popover: 0 0% 100%;
+  --popover-foreground: 220 15% 10%;
+
+  --primary: 150 100% 30%;      /* Deep Professional Green (like Shopify/medium) */
+  --primary-foreground: 0 0% 100%;
+
+  --secondary: 150 20% 96%;     /* Very subtle green tint */
+  --secondary-foreground: 150 100% 30%;
+
+  --muted: 220 10% 95%;
+  --muted-foreground: 220 10% 45%;
+
+  --accent: 150 30% 96%;
+  --accent-foreground: 150 100% 30%;
+
+  --destructive: 0 84.2% 60.2%;
+  --destructive-foreground: 210 40% 98%;
+
+  --border: 220 15% 90%;
+  --input: 220 15% 90%;
+  --ring: 150 100% 30%;
+
+  --radius: 0.75rem;
+}
+
+.dark {
+  /* Keeping dark mode available but optimizing for light as requested */
+  --background: 222.2 84% 4.9%;
+  --foreground: 210 40% 98%;
+
+  --card: 222.2 84% 4.9%;
+  --card-foreground: 210 40% 98%;
+
+  --popover: 222.2 84% 4.9%;
+  --popover-foreground: 210 40% 98%;
+
+  --primary: 142.1 70.6% 45.3%;
+  --primary-foreground: 144.9 80.4% 10%;
+
+  --secondary: 217.2 32.6% 17.5%;
+  --secondary-foreground: 210 40% 98%;
+
+  --muted: 217.2 32.6% 17.5%;
+  --muted-foreground: 215 20.2% 65.1%;
+
+  --accent: 217.2 32.6% 17.5%;
+  --accent-foreground: 210 40% 98%;
+
+  --destructive: 0 62.8% 30.6%;
+  --destructive-foreground: 210 40% 98%;
+
+  --border: 217.2 32.6% 17.5%;
+  --input: 217.2 32.6% 17.5%;
+  --ring: 142.4 71.8% 29.2%;
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+    border-style: solid;
+    border-width: 0;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+    /* Clean subtle gradient for depth */
+    background-image: linear-gradient(to bottom right, hsl(var(--background)), hsl(210 20% 95%));
+    background-attachment: fixed;
+  }
+}
+
+/* Pro UI Utilities */
+.glass {
+  @apply bg-white/80 backdrop-blur-xl border-b border-gray-100 shadow-sm sticky top-0 z-50;
+}
+
+.glass-card {
+  @apply bg-white border border-gray-100 shadow-sm hover:shadow-md transition-all duration-300 rounded-xl;
+}
