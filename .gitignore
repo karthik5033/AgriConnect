@@ -30,8 +30,6 @@ yarn-error.log*
 *.env
 *.env.*
 
-# Legacy Code
-_legacy/
 
 # Editor
 .vscode/

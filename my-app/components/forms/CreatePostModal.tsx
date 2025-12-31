@@ -9,7 +9,11 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Image as ImageIcon, Loader2 } from 'lucide-react';
 
-export default function CreatePostModal() {
+interface CreatePostModalProps {
+  trigger?: React.ReactNode;
+}
+
+export default function CreatePostModal({ trigger }: CreatePostModalProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   
@@ -19,6 +23,7 @@ export default function CreatePostModal() {
   const [type, setType] = useState('PLANTATION_UPDATE');
 
   const handleSubmit = async (e: React.FormEvent) => {
+    // ... same submit logic
     e.preventDefault();
     setLoading(true);
     
@@ -47,9 +52,11 @@ export default function CreatePostModal() {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button className="w-full justify-start text-gray-500 bg-gray-100 hover:bg-gray-200 border-none justify-items-start pl-4 rounded-full h-12">
-            Start a post, share a crop update...
-        </Button>
+        {trigger ? trigger : (
+            <Button className="w-full justify-start text-gray-500 bg-gray-100 hover:bg-gray-200 border-none justify-items-start pl-4 rounded-full h-12">
+                Start a post, share a crop update...
+            </Button>
+        )}
       </DialogTrigger>
       <DialogContent className="sm:max-w-[600px]">
         <DialogHeader>
