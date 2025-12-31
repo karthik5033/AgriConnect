@@ -1,0 +1,201 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./prisma/dev.db"
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String    @unique
+  emailVerified DateTime?
+  image         String?
+  password      String?
+  role          String    @default("FARMER")
+  gender        String?   // "male", "female", "other"
+  age           Int?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  profile       Profile?
+  posts         Post[]
+  comments      Comment[]
+  likes         Like[]
+  
+  followedBy    Follow[]  @relation("followedBy")
+  following     Follow[]  @relation("following")
+  
+  sentConnections      Connection[] @relation("sentConnections")
+  receivedConnections  Connection[] @relation("receivedConnections")
+  
+  equipment   Equipment[]
+  
+  conversations Conversation[]
+  messages      Message[]
+  notifications Notification[]
+}
+
+model Profile {
+  id            String   @id @default(cuid())
+  userId        String   @unique
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  bio           String?
+  location      String?
+  website       String?
+  bannerImage   String?
+  profileImage  String?  // Profile picture URL
+  crops         String?
+  
+  followersCount Int @default(0)
+  followingCount Int @default(0)
+  
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model Post {
+  id          String    @id @default(cuid())
+  authorId    String
+  author      User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  
+  content     String
+  type        String    @default("PLANTATION_UPDATE")
+  
+  cropName    String?
+  growthStage String?
+  areaSize    String?
+  location    String?
+  
+  images      String?
+  
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  
+  comments    Comment[]
+  likes       Like[]
+  soilMetrics SoilMetric?
+}
+
+model SoilMetric {
+  id        String  @id @default(cuid())
+  postId    String  @unique
+  post      Post    @relation(fields: [postId], references: [id], onDelete: Cascade)
+  
+  npk       String?
+  ph        Float?
+  moisture  Float?
+}
+
+model Comment {
+  id        String   @id @default(cuid())
+  content   String
+  authorId  String
+  author    User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  postId    String
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+}
+
+model Like {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  postId    String
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  @@unique([userId, postId])
+}
+
+model Follow {
+  id          String @id @default(cuid())
+  followerId  String
+  follower    User   @relation("following", fields: [followerId], references: [id], onDelete: Cascade)
+  followingId String
+  following   User   @relation("followedBy", fields: [followingId], references: [id], onDelete: Cascade)
+
+  @@unique([followerId, followingId])
+}
+
+model Connection {
+  id        String   @id @default(cuid())
+  
+  fromUserId String
+  fromUser   User     @relation("sentConnections", fields: [fromUserId], references: [id], onDelete: Cascade)
+  
+  toUserId  String
+  toUser    User     @relation("receivedConnections", fields: [toUserId], references: [id], onDelete: Cascade)
+  
+  status    String   @default("pending")
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([fromUserId, toUserId])
+}
+
+model Equipment {
+  id          String   @id @default(cuid())
+  name        String
+  type        String
+  image       String?
+  
+  rateRaw     Float
+  rateUnit    String
+  
+  location    String
+  description String?
+  
+  rating      Float    @default(0)
+  reviews     Int      @default(0)
+  
+  ownerId     String
+  owner       User     @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  
+  isAvailable Boolean  @default(true)
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Conversation {
+  id        String    @id @default(cuid())
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  
+  users     User[]
+  messages  Message[]
+}
+
+model Message {
+  id             String       @id @default(cuid())
+  content        String
+  
+  conversationId String
+  conversation   Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  
+  senderId       String
+  sender         User         @relation(fields: [senderId], references: [id])
+  
+  read           Boolean      @default(false)
+  createdAt      DateTime     @default(now())
+}
+
+model Notification {
+  id          String   @id @default(cuid())
+  recipientId String
+  recipient   User     @relation(fields: [recipientId], references: [id], onDelete: Cascade)
+  
+  type        String
+  content     String
+  read        Boolean  @default(false)
+  
+  relatedId   String?
+  link        String?
+  
+  createdAt   DateTime @default(now())
+}
