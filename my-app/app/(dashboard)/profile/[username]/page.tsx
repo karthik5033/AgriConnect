@@ -29,8 +29,8 @@ const MOCK_POSTS = [
   }
 ];
 
-export default async function ProfilePage({ params }: { params: { username: string } }) {
-  // const username = params.username;
+export default async function ProfilePage({ params }: { params: Promise<{ username: string }> }) {
+  const { username } = await params;
 
   return (
     <div className="max-w-4xl mx-auto pb-10">

@@ -24,17 +24,19 @@ const MOCK_MESSAGES = [
 
 export async function GET(
     request: Request,
-    { params }: { params: { id: string } }
+    { params }: { params: Promise<{ id: string }> }
 ) {
-  // In real app: Fetch messages for params.id
+  const { id } = await params;
+  // In real app: Fetch messages for id
   
   return NextResponse.json(MOCK_MESSAGES);
 }
 
 export async function POST(
     request: Request,
-    { params }: { params: { id: string } }
+    { params }: { params: Promise<{ id: string }> }
 ) {
+    const { id } = await params;
     try {
         const body = await request.json();
         // Save message to DB

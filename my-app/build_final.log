@@ -1,0 +1,85 @@
+﻿
+> my-app@0.1.0 build
+> next build
+
+node.exe : ΓÜá Warning: Next.js inferred your 
+workspace root, but it may not be correct.
+At C:\Program Files\nodejs\npm.ps1:29 char:3
++   & $NODE_EXE $NPM_CLI_JS $args
++   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecifi    
+ed: (ΓÜá Warning: Ne...not be correc    
+t.:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeComm    
+andError
+ 
+ We detected multiple lockfiles and selected 
+the directory of D:\coding_files\Projects\agri
+connect\package-lock.json as the root 
+directory.
+ To silence this warning, set 
+`turbopack.root` in your Next.js config, or 
+consider removing one of the lockfiles if 
+it's not needed.
+   See https://nextjs.org/docs/app/api-referen
+ce/config/next-config-js/turbopack#root-direct
+ory for more information.
+ Detected additional lockfiles: 
+   * D:\coding_files\Projects\agriconnect\my-a
+pp\package-lock.json
+
+Γû▓ Next.js 16.1.1 (Turbopack)
+- Environments: .env
+
+  Creating an optimized production build ...
+Γ£ô Compiled successfully in 2.1s
+  Running TypeScript ...
+Failed to compile.
+
+.next/types/validator.ts:162:31
+Type error: Type 'typeof import("D:/coding_fil
+es/Projects/agriconnect/my-app/app/api/convers
+ations/[id]/route")' does not satisfy the 
+constraint 'RouteHandlerConfig<"/api/conversat
+ions/[id]">'.
+  Types of property 'GET' are incompatible.
+    Type '(request: Request, { params }: { 
+params: { id: string; }; }) => 
+Promise<NextResponse<{ id: string; content: 
+string; senderId: string; createdAt: string; 
+}[]>>' is not assignable to type '(request: 
+NextRequest, context: { params: Promise<{ id: 
+string; }>; }) => void | Response | 
+Promise<void | Response>'.
+      Types of parameters '__1' and 'context' 
+are incompatible.
+        Type '{ params: Promise<{ id: string; 
+}>; }' is not assignable to type '{ params: { 
+id: string; }; }'.
+          Types of property 'params' are 
+incompatible.
+            Property 'id' is missing in type 
+'Promise<{ id: string; }>' but required in 
+type '{ id: string; }'.
+
+[0m [90m 160 |[39m   type 
+__IsExpected[33m<[39m[33mSpecific[39m 
+[36mextends[39m [33mRouteHandlerConfig[39m
+[33m<[39m[32m"/api/conversations/[id]"[39m
+[33m>>[39m [33m=[39m [33mSpecific[39m
+ [90m 161 |[39m   [36mconst[39m handler 
+[33m=[39m {} [36mas[39m [36mtypeof[39m 
+[36mimport[39m([32m"../../app/api/conversati
+ons/[id]/route.js"[39m)
+[31m[1m>[22m[39m[90m 162 |[39m   type 
+__Check [33m=[39m 
+__IsExpected[33m<[39m[36mtypeof[39m 
+handler[33m>[39m
+ [90m     |[39m                             
+  [31m[1m^[22m[39m
+ [90m 163 |[39m   [90m// @ts-ignore[39m
+ [90m 164 |[39m   type __Unused [33m=[39m 
+__Check
+ [90m 165 |[39m }[0m
+Next.js build worker exited with code: 1 and 
+signal: null

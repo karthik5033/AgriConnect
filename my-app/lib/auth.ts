@@ -1,12 +1,9 @@
 import { NextAuthOptions } from "next-auth";
-import { PrismaAdapter } from "@auth/prisma-adapter";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
-import prisma from "@/lib/prisma";
-import { Adapter } from "next-auth/adapters";
 
 export const authOptions: NextAuthOptions = {
-  adapter: PrismaAdapter(prisma) as Adapter,
+  // adapter: PrismaAdapter(prisma) as Adapter, // Removed Prisma Adapter
   session: {
     strategy: "jwt",
   },
@@ -29,26 +26,18 @@ export const authOptions: NextAuthOptions = {
           return null;
         }
 
-        const user = await prisma.user.findUnique({
-          where: {
+        // MOCK AUTH for JSON DB Phase
+        // In real app, check against db.users
+        const mockUser = {
+            id: "u1",
             email: credentials.email,
-          },
-        });
-
-        if (!user || !user.password) { // Add password check logic here (bcrypt)
-          return null;
-        }
-
-        // Simulating password check (USER MUST IMPLEMENT BCRYPT)
-        // const isValid = await bcrypt.compare(credentials.password, user.password);
-        // if (!isValid) return null;
-
-        return {
-          id: user.id,
-          email: user.email,
-          name: user.name,
-          role: user.role,
+            name: "Rajesh Kumar",
+            role: "FARMER" as any, // Cast to any to satisfy NextAuth type for now
+            image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=60"
         };
+        
+        // Return mock user for ANY valid input for now
+        return mockUser;
       },
     }),
   ],
